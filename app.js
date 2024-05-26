@@ -1,38 +1,38 @@
-let stopwatchInterval;
-let elapsedTime = 0;
-let saveInterval;
-
-function startStopwatch() {
-    if (stopwatchInterval) return;
-    console.log("Stopwatch started");
-    stopwatchInterval = setInterval(() => {
-        elapsedTime++;
-        console.log(`Elapsed time: ${elapsedTime} seconds`);
-    }, 1000);
-
-    saveInterval = setInterval(async () => {
-        await saveElapsedTime(elapsedTime);
-    }, 5000);
+function helloWorld() {
+    console.log('Hello');
+    setTimeout(function(){
+        console.log("World")
+    }, 2000)
 }
 
-function stopStopwatch() {
-    if (!stopwatchInterval) return;
-    clearInterval(stopwatchInterval);
-    clearInterval(saveInterval);
-    stopwatchInterval = null;
-    saveInterval = null;
-    console.log(`Stopwatch stopped at ${elapsedTime} seconds`);
-    elapsedTime = 0;
+// let button = document.querySelector("button");
+// button.addEventListener('click', helloWorld);
+
+//with promise
+function helloWorldWithPromise(){
+ console.log("Hello");
+
+  let promise = new Promise(function(resolve, reject){
+    setTimeout(function(){
+        resolve("World")
+    }, 2000)
+});
+
+promise.then(function(result){
+    console.log(result)
+})
 }
 
-function saveElapsedTime(time) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            console.log(`Elapsed time saved: ${time} seconds`);
-            resolve();
-        }, 500);
+//with async await
+async function helloWorldwithAsync()
+{
+    console.log("Hello");
+    
+    let promise = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            resolve("World")
+        }, 2000)
     });
+    let result = await promise;
+    console.log(result);
 }
-
-window.startStopwatch = startStopwatch;
-window.stopStopwatch = stopStopwatch;
