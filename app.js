@@ -1,48 +1,38 @@
-async function startQuiz() {
-    
-    let finalScore = 0;
-    for(let index = 0; index < questions.length; index++){
-        const {question, answers, correct} = questions[index];
-        const userInput = await askQuestion(question, answers);
-        if(userInput == correct)
-            {
-                finalScore += 1;
-                console.log("Correct!");
-            }
-            else
-            {
-                console.log("Not correct!");
-            }
-    }
+let stopwatchInterval;
+let elapsedTime = 0;
+let saveInterval;
 
-    console.log(`Final result: ` + finalScore);
+function startStopwatch() {
+    if (stopwatchInterval) return;
+    console.log("Stopwatch started");
+    stopwatchInterval = setInterval(() => {
+        elapsedTime++;
+        console.log(`Elapsed time: ${elapsedTime} seconds`);
+    }, 1000);
+
+    saveInterval = setInterval(async () => {
+        await saveElapsedTime(elapsedTime);
+    }, 5000);
 }
 
-function askQuestion(question,answers)
-{
-    return new Promise(function(resolve, reject){
-        let message = question + '\n';
-        answers.forEach((answer, index) => message += `${index}. ${answer}\n`)
-            const userInput = prompt(message);
-            resolve(parseInt(userInput));
-        });
-    
+function stopStopwatch() {
+    if (!stopwatchInterval) return;
+    clearInterval(stopwatchInterval);
+    clearInterval(saveInterval);
+    stopwatchInterval = null;
+    saveInterval = null;
+    console.log(`Stopwatch stopped at ${elapsedTime} seconds`);
+    elapsedTime = 0;
 }
 
-const questions= [
-    {
-      question: "What is 2 + 2?",
-      answers: ["3", "4", "5"],
-      correct: 1
-    },
-    {
-        question: "What is the capital of France?",
-        answers: ["Berlin", "Madrid", "Paris"],
-        correct: 2
-      },
-      {
-        question: "What is the square root of 16?",
-        answers: ["4", "5", "6"],
-        correct: 0
-      }
-]
+function saveElapsedTime(time) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(`Elapsed time saved: ${time} seconds`);
+            resolve();
+        }, 500);
+    });
+}
+
+window.startStopwatch = startStopwatch;
+window.stopStopwatch = stopStopwatch;
