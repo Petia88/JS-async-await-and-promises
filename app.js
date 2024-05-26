@@ -1,24 +1,10 @@
-function racePromise() {
-    let promise1 = new Promise(function(resolve, reject){
-        setTimeout(function(){
-            resolve("Promise 1")
-        }, 1000);
-    })
+async function simplePromiseAsync() {
+   let promise = new Promise(function(resolve, reject){
+    setTimeout(function(){
+        resolve("Async/Await is awesome!");
+    }, 2000);
+   })
 
-    let promise2 = new Promise(function(resolve, reject){
-        setTimeout(function(){
-            resolve("Promise 2")
-        }, 2000);
-    })
-
-    let promise3 = new Promise(function(resolve, reject){
-        setTimeout(function(){
-            resolve("Promise 3")
-        }, 3000);
-    })
-
-    Promise.race([promise1, promise2, promise3])
-    .then(function(result){
-        console.log(result)
-    })
+   let result = await promise;
+   console.log(result)
 }
