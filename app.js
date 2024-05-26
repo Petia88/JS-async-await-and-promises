@@ -1,10 +1,16 @@
-function promiseRejection() {
+function promiseWithMultipleHandlers() {
     let promise = new Promise(function(resolve, reject){
         setTimeout(function(){
-            reject("Something went wrong!")
-        }, 1000);
+            resolve("Hello World!");
+        }, 2000)
     });
-    promise.catch(function(err){
-        console.log(err)
+
+    promise.then(function(result){
+        console.log(result)
+
+        return result;
+    })
+    .then(function(result){
+        console.log(result);
     })
 }
