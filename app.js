@@ -1,10 +1,14 @@
-async function simplePromiseAsync() {
+async function promiseRejectionAsync() {
    let promise = new Promise(function(resolve, reject){
-    setTimeout(function(){
-        resolve("Async/Await is awesome!");
-    }, 2000);
+      setTimeout(function(){
+         reject(new Error("Error!"))
+      }, 1000);
    })
 
-   let result = await promise;
-   console.log(result)
+   try{
+      await promise;
+   }
+   catch(err){
+      console.log(err);
+   }
 }
