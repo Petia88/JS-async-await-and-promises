@@ -1,38 +1,40 @@
-function helloWorld() {
-    console.log('Hello');
+function chainedPromises() {
+   console.log("Start");
+   setTimeout(function(){
+    console.log("1");
     setTimeout(function(){
-        console.log("World")
-    }, 2000)
+        console.log("2");
+        setTimeout(function(){
+            console.log("3")
+        }, 1000)
+    }, 1000)
+   }, 1000)
 }
-
-// let button = document.querySelector("button");
-// button.addEventListener('click', helloWorld);
 
 //with promise
-function helloWorldWithPromise(){
- console.log("Hello");
-
-  let promise = new Promise(function(resolve, reject){
+function wait(ms)
+{
+    return new Promise(function(resolve, reject){
     setTimeout(function(){
-        resolve("World")
-    }, 2000)
-});
-
-promise.then(function(result){
-    console.log(result)
-})
+        resolve();
+    }, ms)
+    })
 }
 
-//with async await
-async function helloWorldwithAsync()
+function chainedPromisesWithPromise()
 {
-    console.log("Hello");
-    
-    let promise = new Promise(function(resolve, reject){
-        setTimeout(function(){
-            resolve("World")
-        }, 2000)
-    });
-    let result = await promise;
-    console.log(result);
+    console.log("Start");
+
+    wait(1000)
+    .then(function(){
+        console.log("1");
+        return wait(1000);
+    })
+    .then(function(){
+        console.log("2");
+        return wait(1000);
+    })
+    .then(function(){
+        console.log("3");
+    })
 }
