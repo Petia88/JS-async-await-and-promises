@@ -1,16 +1,24 @@
-function promiseWithMultipleHandlers() {
-    let promise = new Promise(function(resolve, reject){
+function allPromise() {
+    let promise1 = new Promise(function(resolve, reject){
         setTimeout(function(){
-            resolve("Hello World!");
-        }, 2000)
-    });
-
-    promise.then(function(result){
-        console.log(result)
-
-        return result;
+            resolve("Promise 1")
+        }, 1000);
     })
+
+    let promise2 = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            resolve("Promise 2")
+        }, 2000);
+    })
+
+    let promise3 = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            resolve("Promise 3")
+        }, 3000);
+    })
+
+    Promise.all([promise1, promise2, promise3])
     .then(function(result){
-        console.log(result);
+        console.log(result)
     })
 }
