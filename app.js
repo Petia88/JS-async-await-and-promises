@@ -1,4 +1,4 @@
-function allPromise() {
+function racePromise() {
     let promise1 = new Promise(function(resolve, reject){
         setTimeout(function(){
             resolve("Promise 1")
@@ -17,7 +17,7 @@ function allPromise() {
         }, 3000);
     })
 
-    Promise.all([promise1, promise2, promise3])
+    Promise.race([promise1, promise2, promise3])
     .then(function(result){
         console.log(result)
     })
